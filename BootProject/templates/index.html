@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Background Generator</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color, #f4f4f4);
+            color: var(--text-color, #333);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            text-align: left;
+            font-size: 14px;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .dark-mode-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .dark-mode-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-btn" onclick="toggleDarkMode()">다크 모드 전환</button>
+    <div class="container">
+        <h1>배경 생성 도구</h1>
+        <form action="/api/process-image/" method="post" enctype="multipart/form-data">
+            <label for="file">이미지 업로드:</label>
+            <input type="file" name="file" id="file" required>
+            
+            <label for="prompt">배경 설명 입력:</label>
+            <input type="text" name="prompt" id="prompt" placeholder="예: 산과 하늘이 어우러진 풍경">
+            
+            <button type="submit">생성하기</button>
+        </form>
+        <div class="footer">
+            <p>&copy; 2025 Image Generator Tool</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            const currentBg = getComputedStyle(document.body).getPropertyValue("--bg-color").trim();
+            if (currentBg === "#f4f4f4" || currentBg === "") {
+                document.body.style.setProperty("--bg-color", "#333");
+                document.body.style.setProperty("--text-color", "#f4f4f4");
+            } else {
+                document.body.style.setProperty("--bg-color", "#f4f4f4");
+                document.body.style.setProperty("--text-color", "#333");
+            }
+        }
+    </script>
+</body>
+</html>
